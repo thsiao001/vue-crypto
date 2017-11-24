@@ -2,8 +2,9 @@
     <div class="home">
         <h1>Cryptopia</h1>
         <router-link to="/watchlist">WatchList</router-link>
+        <input type="text" class="searchTerm" v-model="searchText" placeholder="Search for coin" />
         <table-grid
-                :data="gridData"
+                :data="filteredGridData"
                 :display-columns="gridDisplayColumn"
                 :columns="gridColumns"
                 :filter-key="searchQuery">
@@ -21,7 +22,17 @@
         searchQuery: '',
         gridDisplayColumn: ['Rank', 'Name', 'Symbol', '24H Volume', 'Price $', 'Price (btc)', 'Market Cap $', '%  Change 24H', '%  Change 7D'],
         gridColumns: ['rank', 'name', 'symbol', '24h_volume_usd', 'price_usd', 'price_btc', 'market_cap_usd', 'percent_change_24h', 'percent_change_7d'],
-        gridData: []
+        gridData: [],
+        searchText: ''
+      }
+    },
+    computed: {
+      filteredGridData: function () {
+        return this.gridData.filter((data) => {
+          let lowerCaseData = data.name.toLowerCase()
+          let lowerCaseSearchText = this.searchText.toLowerCase()
+          return lowerCaseData.match(lowerCaseSearchText)
+        })
       }
     },
     methods: {
@@ -40,4 +51,14 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+    .searchTerm {
+        float: left;
+        width: 30%;
+        border: 3px solid #00B4CC;
+        padding: 5px;
+        height: 20px;
+        border-radius: 5px;
+        outline: none;
+        color: #9DBFAF;
+    }
 </style>
