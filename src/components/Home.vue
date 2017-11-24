@@ -1,8 +1,10 @@
 <template>
     <div class="home">
+        <h1>Cryptopia</h1>
         <router-link to="/watchlist">WatchList</router-link>
         <table-grid
                 :data="gridData"
+                :display-columns="gridDisplayColumn"
                 :columns="gridColumns"
                 :filter-key="searchQuery">
         </table-grid>
@@ -17,7 +19,8 @@
     data () {
       return {
         searchQuery: '',
-        gridColumns: ['rank', 'symbol', '24h_volume_usd', 'price_usd', 'price_btc'],
+        gridDisplayColumn: ['Rank', 'Name', 'Symbol', '24H Volume', 'Price $', 'Price (btc)', 'Market Cap $', '%  Change 24H', '%  Change 7D'],
+        gridColumns: ['rank', 'name', 'symbol', '24h_volume_usd', 'price_usd', 'price_btc', 'market_cap_usd', 'percent_change_24h', 'percent_change_7d'],
         gridData: []
       }
     },

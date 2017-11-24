@@ -1,21 +1,21 @@
 <template>
-    <table>
+    <table id="coins">
         <thead>
-        <tr>
-            <th v-for="key in columns"
-                @click="sortBy(key)"
-                :class="{ active: sortKey == key }">
-                {{ key | capitalize }}
-                <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
-            </th>
-        </tr>
+            <tr>
+                <th v-for="key in displayColumns"
+                    @click="sortBy(key)"
+                    :class="{ active: sortKey == key }">
+                    {{ key | capitalize }}
+                    <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
+                </th>
+            </tr>
         </thead>
         <tbody>
-        <tr v-for="entry in filteredData">
-            <td v-for="key in columns">
-                {{entry[key]}}
-            </td>
-        </tr>
+            <tr v-for="entry in filteredData">
+                <td v-for="key in columns">
+                    {{entry[key]}}
+                </td>
+            </tr>
         </tbody>
     </table>
 </template>
@@ -24,6 +24,7 @@
   export default {
     props: {
       data: Array,
+      displayColumns: Array,
       columns: Array,
       filterKey: String
     },
@@ -73,3 +74,28 @@
     }
   }
 </script>
+
+<style scoped>
+    #coins {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #coins td, #coins th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #coins tr:nth-child(even){background-color: #f2f2f2;}
+
+    #coins tr:hover {background-color: #ddd;}
+
+    #coins th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+    }
+</style>
