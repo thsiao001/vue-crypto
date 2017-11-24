@@ -4,9 +4,10 @@
             <tr>
                 <th v-for="key in displayColumns"
                     @click="sortBy(key)"
-                    :class="{ active: sortKey == key }">
+                    v-bind:class="{ active: sortKey == key }">
                     {{ key | capitalize }}
-                    <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
+                    <span v-if="sortKey == key" class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
+
                 </th>
             </tr>
         </thead>
@@ -30,7 +31,7 @@
     },
     data: function () {
       var sortOrders = {}
-      this.columns.forEach(function (key) {
+      this.displayColumns.forEach(function (key) {
         sortOrders[key] = 1
       })
       return {
@@ -41,6 +42,7 @@
     computed: {
       filteredData: function () {
         var sortKey = this.sortKey
+        var sortObjKey = this.sortObjKey
         var filterKey = this.filterKey && this.filterKey.toLowerCase()
         var order = this.sortOrders[sortKey] || 1
         var data = this.data
@@ -53,8 +55,8 @@
         }
         if (sortKey) {
           data = data.slice().sort(function (a, b) {
-            a = a[sortKey]
-            b = b[sortKey]
+            a = a[sortObjKey]
+            b = b[sortObjKey]
             return (a === b ? 0 : a > b ? 1 : -1) * order
           })
         }
@@ -69,7 +71,8 @@
     methods: {
       sortBy: function (key) {
         this.sortKey = key
-        this.sortOrders[key] = this.sortOrders[key] * -1
+        this.sortObjKey = this.columns[this.displayColumns.indexOf(key)]
+        this.sortOrders[this.sortKey] = this.sortOrders[key] * -1
       }
     }
   }
@@ -97,5 +100,30 @@
         text-align: left;
         background-color: #4CAF50;
         color: white;
+    }
+
+    .active {
+        color: #fff;
+    }
+
+    .arrow {
+        display: inline-block;
+        vertical-align: middle;
+        width: 0;
+        height: 0;
+        margin-left: 5px;
+        opacity: 0.66;
+    }
+
+    .arrow.asc {
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-bottom: 4px solid #fff;
+    }
+
+    .arrow.dsc {
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid #fff;
     }
 </style>

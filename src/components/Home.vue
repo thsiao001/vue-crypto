@@ -4,10 +4,10 @@
         <router-link to="/watchlist">WatchList</router-link>
         <input type="text" class="searchTerm" v-model="searchText" placeholder="Search for coin" />
         <table-grid
-                :data="filteredGridData"
+                :data="gridData"
                 :display-columns="gridDisplayColumn"
                 :columns="gridColumns"
-                :filter-key="searchQuery">
+                :filter-key="searchText">
         </table-grid>
     </div>
 </template>
@@ -24,15 +24,6 @@
         gridColumns: ['rank', 'name', 'symbol', '24h_volume_usd', 'price_usd', 'price_btc', 'market_cap_usd', 'percent_change_24h', 'percent_change_7d'],
         gridData: [],
         searchText: ''
-      }
-    },
-    computed: {
-      filteredGridData: function () {
-        return this.gridData.filter((data) => {
-          let lowerCaseData = data.name.toLowerCase()
-          let lowerCaseSearchText = this.searchText.toLowerCase()
-          return lowerCaseData.match(lowerCaseSearchText)
-        })
       }
     },
     methods: {
