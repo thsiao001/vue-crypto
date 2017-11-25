@@ -1,7 +1,5 @@
 <template>
   <div class="watch-list">
-      <router-link to="/">Home</router-link>
-    </ul>
   </div>
 </template>
 

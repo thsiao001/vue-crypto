@@ -1,8 +1,7 @@
 <template>
     <div class="home">
         <h1>Cryptopia</h1>
-        <router-link to="/watchlist">WatchList</router-link>
-        <input type="text" class="searchTerm" v-model="searchText" placeholder="Search for coin" />
+        <input type="text" class="searchTerm" v-model="searchText" placeholder="Search For Coin By Name" />
         <table-grid
                 :data="gridData"
                 :display-columns="gridDisplayColumn"
